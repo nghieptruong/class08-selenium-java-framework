@@ -50,4 +50,8 @@ public class RegisterPage {
         String actualRegisterMsg = lblRegisterMsg.getText();
         return actualRegisterMsg;
     }
+
+    public void waitRegisterMessageDisappear(WebDriverWait wait) {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(byLblRegisterMsg));
+    }
 }

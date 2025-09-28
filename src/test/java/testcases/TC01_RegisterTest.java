@@ -13,6 +13,8 @@ import org.testng.asserts.SoftAssert;
 import pages.RegisterPage;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class TC01_RegisterTest {
@@ -26,6 +28,12 @@ public class TC01_RegisterTest {
         //disable automation bar
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         options.setExperimentalOption("useAutomationExtension", false);
+
+        // Disable password save dialog
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+        options.setExperimentalOption("prefs", prefs);
 
         WebDriver driver = new ChromeDriver(options); // khoi tao 1 driver object co kieu ChromeDriver (process chromedriver.exe)
         driver.get("https://demo1.cybersoft.edu.vn/"); // navigate (mở) 1 site
@@ -64,6 +72,8 @@ public class TC01_RegisterTest {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(actualRegisterMsg, "Đăng ký thành công", "Register message failed!");
 
+        registerPage.waitRegisterMessageDisappear(webDriverWait);
+
         //VP2: Check register page still displays
         String url = driver.getCurrentUrl();
         softAssert.assertEquals(url, "https://demo1.cybersoft.edu.vn/sign-up", "Register page does not display!");
@@ -95,12 +105,12 @@ public class TC01_RegisterTest {
 //        js.executeScript("arguments[0].click();", btnLoginForm);
 
         //cach 2: xai submit()
-        btnLoginForm.submit();
+//        btnLoginForm.submit();
 
         //cach 3:
         //Ly do: ???
         //Thread.sleep(1000)
-//        btnLoginForm.click();
+        btnLoginForm.click();
 
         //VP3.1: 'Đăng nhập thành công' message displays
         By byLblLoginMsg = By.id("swal2-title");
