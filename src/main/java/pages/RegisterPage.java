@@ -1,11 +1,10 @@
 package pages;
 
+import drivers.DriverFactory;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class RegisterPage {
+
+public class RegisterPage extends CommonPage {
 
     private By byTxtAccount = By.id("taiKhoan");
     private By byTxtPassword = By.id("matKhau");
@@ -15,43 +14,35 @@ public class RegisterPage {
     private By byBtnRegisterNewAcc = By.xpath("//button[.='Đăng ký']");
     private By byLblRegisterMsg = By.id("swal2-title");
 
-    public void enterAccount(WebDriverWait wait, String account) {
-        WebElement txtAccount = wait.until(ExpectedConditions.visibilityOfElementLocated(byTxtAccount));
-        txtAccount.sendKeys(account);
+    public void enterAccount(String account) {
+        sendKeys(DriverFactory.getDriver(), byTxtAccount, account);
     }
 
-    public void enterPassword(WebDriverWait wait, String password) {
-        WebElement txtPassword = wait.until(ExpectedConditions.visibilityOfElementLocated(byTxtPassword));
-        txtPassword.sendKeys(password);
+    public void enterPassword(String password) {
+        sendKeys(DriverFactory.getDriver(), byTxtPassword, password);
     }
 
-    public void enterConfirmPassword(WebDriverWait wait, String password) {
-        WebElement txtConfirmPassword = wait.until(ExpectedConditions.visibilityOfElementLocated(byTxtConfirmPassword));
-        txtConfirmPassword.sendKeys(password);
+    public void enterConfirmPassword(String password) {
+        sendKeys(DriverFactory.getDriver(), byTxtConfirmPassword, password);
     }
 
-    public void enterName(WebDriverWait wait, String name) {
-        WebElement txtName = wait.until(ExpectedConditions.visibilityOfElementLocated(byTxtName));
-        txtName.sendKeys(name);
+    public void enterName(String name) {
+        sendKeys(DriverFactory.getDriver(), byTxtName, name);
     }
 
-    public void enterEmail(WebDriverWait wait, String email) {
-        WebElement txtEmail = wait.until(ExpectedConditions.visibilityOfElementLocated(byTxtEmail));
-        txtEmail.sendKeys(email);
+    public void enterEmail(String email) {
+        sendKeys(DriverFactory.getDriver(), byTxtEmail, email);
     }
 
-    public void clickRegister(WebDriverWait wait) {
-        WebElement btnRegisterNewAcc = wait.until(ExpectedConditions.elementToBeClickable(byBtnRegisterNewAcc));
-        btnRegisterNewAcc.click();
+    public void clickRegister() {
+        click(DriverFactory.getDriver(), byBtnRegisterNewAcc);
     }
 
-    public String getRegisterMessage(WebDriverWait wait) {
-        WebElement lblRegisterMsg = wait.until(ExpectedConditions.visibilityOfElementLocated(byLblRegisterMsg));
-        String actualRegisterMsg = lblRegisterMsg.getText();
-        return actualRegisterMsg;
+    public String getRegisterMessage() {
+        return getText(DriverFactory.getDriver(), byLblRegisterMsg);
     }
 
-    public void waitRegisterMessageDisappear(WebDriverWait wait) {
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(byLblRegisterMsg));
+    public void waitRegisterMessageDisappear() {
+        waitForInvisibilityOfElementLocated(DriverFactory.getDriver(), byLblRegisterMsg);
     }
 }
