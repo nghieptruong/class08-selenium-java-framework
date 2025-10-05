@@ -39,6 +39,7 @@ public class BaseTest {
         LOG.info("Test completed");
         if(result.getStatus() == ITestResult.FAILURE) {
             ExtentReportManager.captureScreenshot(driver, result.getMethod().getMethodName());
+            ExtentReportManager.fail(result.getThrowable().toString());
         }
     }
 
