@@ -1,6 +1,8 @@
 package base;
 
 import constants.ConstantTimeOut;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,11 +13,14 @@ import java.time.Duration;
 
 public class BasePage {
 
+    protected final Logger LOG = LogManager.getLogger(getClass());
+
     public WebDriverWait getWait(WebDriver driver, long timeOut) {
         return new WebDriverWait(driver, Duration.ofSeconds(timeOut));
     }
 
     public WebElement waitForVisibilityOfElementLocated(WebDriver driver, By locator, long timeOut) {
+        LOG.info(String.format("waitForVisibilityOfElementLocated: %s in %ds", locator, timeOut));
         return getWait(driver, timeOut).until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
@@ -24,6 +29,7 @@ public class BasePage {
     }
 
     public WebElement waitForElementToBeClickable(WebDriver driver, By locator, long timeOut) {
+        LOG.info(String.format("waitForElementToBeClickable: %s in %ds", locator, timeOut));
         return getWait(driver, timeOut).until(ExpectedConditions.elementToBeClickable(locator));
     }
 
@@ -32,6 +38,7 @@ public class BasePage {
     }
 
     public void waitForInvisibilityOfElementLocated(WebDriver driver, By locator, long timeOut) {
+        LOG.info(String.format("waitForInvisibilityOfElementLocated: %s in %ds", locator, timeOut));
         getWait(driver, timeOut).until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
 
@@ -40,6 +47,7 @@ public class BasePage {
     }
 
     public void sendKeys(WebDriver driver, By locator, String value, long timeOut) {
+        LOG.info(String.format("sendKeys: %s with %s in %ds", locator, value, timeOut));
         WebElement element = waitForVisibilityOfElementLocated(driver, locator, timeOut);
         element.sendKeys(value);
     }
@@ -49,6 +57,7 @@ public class BasePage {
     }
 
     public void click(WebDriver driver, By locator, long timeOut) {
+        LOG.info(String.format("click: %s in %ds", locator, timeOut));
         WebElement element = waitForElementToBeClickable(driver, locator, timeOut);
         element.click();
     }
@@ -58,6 +67,7 @@ public class BasePage {
     }
 
     public String getText(WebDriver driver, By locator, long timeOut) {
+        LOG.info(String.format("getText: %s in %ds", locator, timeOut));
         WebElement element = waitForVisibilityOfElementLocated(driver, locator, timeOut);
         return element.getText();
     }
